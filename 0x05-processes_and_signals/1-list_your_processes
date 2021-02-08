@@ -2,5 +2,5 @@
 #  Bash script that displays a list of currently running processes
 while read;
 do
-    ps -afux
+    ps -faux
 done
