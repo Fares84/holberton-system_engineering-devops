@@ -3,5 +3,5 @@
 # shellcheck disable=SC2009
 while read;
 do
-	ps -faux | grep bash
+    ps -faux | grep bash
 done
