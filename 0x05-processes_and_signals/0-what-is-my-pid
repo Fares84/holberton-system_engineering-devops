@@ -1,6 +1,3 @@
 #!/usr/bin/env bash
 # Bash script that displays its own PID
-while read;
-do
-	echo $$
-done
+echo $$
