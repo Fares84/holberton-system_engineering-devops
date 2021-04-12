@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# configuring HAproxy to send traffic to web-01 and web-02, among other rqurmnts
+# installing haproxy in the newst version
+sudo apt-get -y update
+sudo apt-get -y install haproxy
+# enable proxy to be started by the init script
+# by echo cmd redirected to haproxy file
+sudo echo "ENABLED=1" | sudo tee /etc/default/haproxy
+# configure the tamplate for load balancer on the haproxy.cfg file
+sudo echo "
+fontend http_front
+        bind *:80
+        mode http
+        default_backend http_back
+backend http_back
+        balance roundrobin
+        server 2528-web-01 34.73.62.68 check
+        server 2528-web-02 34.75.147.36 check
+" | sudo tee -a /etc/haproxy/haproxy.cfg
+sudo systemctl haproxy restart
