@@ -17,4 +17,4 @@ backend http_back
         server 2528-web-01 34.73.62.68 check
         server 2528-web-02 34.75.147.36 check
 " | sudo tee -a /etc/haproxy/haproxy.cfg
-sudo systemctl haproxy restart
+sudo service haproxy restart
