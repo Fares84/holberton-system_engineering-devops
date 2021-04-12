@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# configuring HAproxy to send traffic to web-01 and web-02, among other rqurmnts
+# configuring HAproxy to send traffic to web-01 and web-02
 # installing haproxy in the newst version
 sudo apt-get -y update
 sudo apt-get -y install haproxy
