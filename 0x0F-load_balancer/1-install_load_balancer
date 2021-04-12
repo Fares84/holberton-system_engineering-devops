@@ -8,10 +8,10 @@ sudo apt-get -y install haproxy
 sudo echo "ENABLED=1" | sudo tee /etc/default/haproxy
 # configure the tamplate for load balancer on the haproxy.cfg file
 sudo echo "
-fontend http_front
-        bind *:80
-        mode http
-        default_backend http_back
+frontend http_front
+         bind *:80
+         mode http
+         default_backend http_back
 backend http_back
         balance roundrobin
         server 2528-web-01 34.73.62.68 check
