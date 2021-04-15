@@ -34,41 +34,25 @@ defaults
         errorfile 503 /etc/haproxy/errors/503.http
         errorfile 504 /etc/haproxy/errors/504.http
 
-fontend http_front
+fontend www-http
         bind *:80
-        mode http
+        reqadd X-Forwarded-Proto:\ http
         default_backend http_back
+
+frontend www-https
+        bind *:443 ssl crt /etc/haproxy/certs/www.tech4ever.tech.pem
+        reqadd X-Forwarded-Proto:\ https
+        acl letsencrypt-acl path_beg /.well-known/acme-challenge/
+        use_backend letsencrypt-backend if letsencrypt-acl
+        default_backend www-backend
+
 backend http_back
         balance roundrobin
-        server 2528-web-01 34.73.62.68 check
-        server 2528-web-02 34.75.147.36 check
-
-
-frontend http_front
-        bind *:80
-        mode http
-        default_backend http_back
-backend http_back
-        balance roundrobin
-        server 2528-web-01 34.73.62.68 check
-        server 2528-web-02 34.75.147.36 check
-
-
-frontend http_front
-         bind *:80
-         mode http
-         default_backend http_back
-backend http_back
-        balance roundrobin
-        server 2528-web-01 34.73.62.68 check
-        server 2528-web-02 34.75.147.36 check
-
-
-frontend http_front
-         bind *:80
-         mode http
-         default_backend http_back
-backend http_back
-        balance roundrobin
+	redirect scheme https if !{ ssl-fc }
         server 2528-web-01 34.73.62.68:80 check
         server 2528-web-02 34.75.147.36:80 check
+
+backend letsencrypt-backend
+        server letsencrypt 127.0.0.1:54321
+
+
