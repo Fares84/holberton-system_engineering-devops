@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Bash script to configure nginx server to listen on port 80 (sweet)
+sed -i "s/8080/80/" /etc/nginx/sites-enabled/default
+sudo service nginx restart
+sudo pkill -o nginx
